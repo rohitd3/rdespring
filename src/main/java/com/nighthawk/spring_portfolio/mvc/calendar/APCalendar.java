@@ -1,4 +1,6 @@
 package com.nighthawk.spring_portfolio.mvc.calendar;
+import java.util.*;
+import java.time.*;
 
 // Prototype Implementation
 
@@ -25,11 +27,42 @@ public class APCalendar {
      * 6 denotes Saturday. 
      * firstDayOfYear(2019) returns 2 for Tuesday.
     */
-    private static int firstDayOfYear(int year) {
-        // implementation not shown
 
-        return 0;
+
+    private static int firstDayOfYear(int year) {
+        int currentYearFirstDay = 0;
+        // given that first day of year 2023 is Sunday, here it is being preset what day of the year it is
+        // 0 is Sunday
+
+        if (year == 2023) {
+            currentYearFirstDay = 6; // therefore no change to first day
+
+        } else if (year < 2023) {
+            int yearsAway = 2023 - year;
+            int leapYearsAway = numberOfLeapYears(year, 2023); // finding the number of leap years between 2000 and given year
+            int nonLeapYearsAway = yearsAway - leapYearsAway; // finding the number of non-leap years between 2000 and given year
+            int daysAway = (leapYearsAway * 366) + (nonLeapYearsAway * 365); // total number of days between 2000 and given year
+            for (int i = 0; i < daysAway; i++) {
+                currentYearFirstDay--;
+                if (currentYearFirstDay == -1) {
+                    currentYearFirstDay = 6; // resetting the day to saturday everytime it goes to -1
+                }
+            }
+        } else if (year > 2023) {
+            int yearsAway = year - 2023;
+            int leapYearsAway = numberOfLeapYears(2023, year-1);
+            int nonLeapYearsAway = yearsAway - leapYearsAway;
+            int daysAway = (leapYearsAway * 366) + (nonLeapYearsAway * 365);
+            for (int i = 0; i < daysAway; i++) {
+                currentYearFirstDay++;
+                if (currentYearFirstDay == 7) {
+                    currentYearFirstDay = 0; // resetting to Sunday (0) everytime it goes to 7
+                }
+            }
         }
+        
+        return currentYearFirstDay;
+    }
 
 
     /** Returns n, where month, day, and year specify the nth day of the year.
