@@ -3,16 +3,21 @@ package com.nighthawk.spring_portfolio.mvc.calendar;
 // Prototype Implementation
 
 public class APCalendar {
-
+     
     /** Returns true if year is a leap year and false otherwise.
      * isLeapYear(2019) returns False
      * isLeapYear(2016) returns True
      */          
+
     public static boolean isLeapYear(int year) {
-        // implementation not shown
+        if (year % 4 == 0){
+            return true;
+        }
 
         return false;
         }
+    
+    
         
     /** Returns the value representing the day of the week 
      * 0 denotes Sunday, 
