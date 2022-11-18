@@ -140,4 +140,45 @@ public class APCalendar {
     //     System.out.println("dayOfWeek: " + APCalendar.dayOfWeek(1, 1, 2022));
     // }
 
+    public static void main(String[] args) {
+        Scanner userInput = new Scanner(System.in);
+        
+        // method 1
+        System.out.println("Enter year:");
+        int year1 = userInput.nextInt();
+        System.out.println("firstDayOfYear: " + APCalendar.firstDayOfYear(year1));
+
+        // method 2
+        System.out.println("Enter a year:");
+        int year2 = userInput.nextInt();
+        System.out.println("Enter a month:");
+        int month2 = userInput.nextInt();
+        System.out.println("Enter a day:");
+        int day2 = userInput.nextInt();
+        System.out.println("dayOfYear: " + APCalendar.dayOfYear(month2, day2, year2));
+
+        // method 3
+        System.out.println("Enter year:");
+        int year3 = userInput.nextInt();
+        System.out.println("isLeapYear: " + APCalendar.isLeapYear(year3));
+
+        // method 4
+        System.out.println("Enter year:");
+        int year4 = userInput.nextInt();
+        System.out.println("Enter another year that comes after the previous year:");
+        int nextyear = userInput.nextInt();
+        System.out.println("numberOfLeapYears: " + APCalendar.numberOfLeapYears(year4, nextyear));
+
+        // method 5
+        System.out.println("Enter a year:");
+        int year5 = userInput.nextInt();
+        System.out.println("Enter a month:");
+        int month5 = userInput.nextInt();
+        System.out.println("Enter a day:");
+        int day5 = userInput.nextInt();
+        System.out.println("dayOfWeek: " + APCalendar.dayOfWeek(month5, day5, year5));
+    }
+
+
+
 }
