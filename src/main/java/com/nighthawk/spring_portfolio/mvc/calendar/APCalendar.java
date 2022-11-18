@@ -127,17 +127,17 @@ public class APCalendar {
         return (map.get(days));
     }
     // With help from Everitt Cheng
-    
-    /** Tester method */
-    public static void main(String[] args) {
-        // Private access modifiers
-        System.out.println("firstDayOfYear: " + APCalendar.firstDayOfYear(2022));
-        System.out.println("dayOfYear: " + APCalendar.dayOfYear(1, 1, 2022));
 
-        // Public access modifiers
-        System.out.println("isLeapYear: " + APCalendar.isLeapYear(2022));
-        System.out.println("numberOfLeapYears: " + APCalendar.numberOfLeapYears(2000, 2022));
-        System.out.println("dayOfWeek: " + APCalendar.dayOfWeek(1, 1, 2022));
-    }
+    /** Tester method */
+    // public static void main(String[] args) {
+    //     // Private access modifiers
+    //     System.out.println("firstDayOfYear: " + APCalendar.firstDayOfYear(2022));
+    //     System.out.println("dayOfYear: " + APCalendar.dayOfYear(1, 1, 2022));
+
+    //     // Public access modifiers
+    //     System.out.println("isLeapYear: " + APCalendar.isLeapYear(2022));
+    //     System.out.println("numberOfLeapYears: " + APCalendar.numberOfLeapYears(2000, 2022));
+    //     System.out.println("dayOfWeek: " + APCalendar.dayOfWeek(1, 1, 2022));
+    // }
 
 }
