@@ -72,28 +72,62 @@ public class APCalendar {
      * dayOfYear(3, 1, 2016) returns 61, since 2016 is a leap year. 
     */ 
     private static int dayOfYear(int month, int day, int year) {
-        // implementation not shown
-
-        return 1;
+        int n = 0;
+        int feb = 28;
+        if (isLeapYear(year) == true) {
+            feb = 29;
         }
+
+        int[] months = {31, feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        // this follows the year and each individual month with the number of days in each
+        for (int i = 0; i < month - 1; i++) {
+            n += months[i];
+        }
+
+        n += day;
+        
+        return n;
+    }
 
     /** Returns the number of leap years between year1 and year2, inclusive.
      * Precondition: 0 <= year1 <= year2
     */ 
     public static int numberOfLeapYears(int year1, int year2) {
-         // to be implemented in part (a)
+        int leapCount = 0;
 
-        return 0;
+        for (int i = year1; i <= year2; i++ ) {
+            if (isLeapYear(i) == true) {
+                leapCount++;
+            }
         }
+
+        return leapCount;
+    }
 
     /** Returns the value representing the day of the week for the given date
      * Precondition: The date represented by month, day, year is a valid date.
     */
     public static int dayOfWeek(int month, int day, int year) { 
-        // to be implemented in part (b)
-        return 0;
-        }
-
+        Calendar calenobj = Calendar.getInstance();
+        calenobj.add(Calendar.YEAR, year);
+        calenobj.add(Calendar.MONTH, month - 1); //month begins on index 0
+        calenobj.add(Calendar.DAY_OF_WEEK, day);
+        Map<String, Integer> map = new HashMap<String, Integer>(){{
+            put("Sun",0);
+            put("Mon",1);
+            put("Tue",2);
+            put("Wed",3);
+            put("Thu",4);
+            put("Fri",5);
+            put("Sat",6);
+        }};
+        String currentDay = (calenobj.getTime()).toString();
+        String days = currentDay.substring(0,3);
+        System.out.println(days);
+        return (map.get(days));
+    }
+    // With help from Everitt Cheng
+    
     /** Tester method */
     public static void main(String[] args) {
         // Private access modifiers
