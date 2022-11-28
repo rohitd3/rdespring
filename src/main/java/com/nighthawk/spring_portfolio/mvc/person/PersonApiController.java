@@ -43,6 +43,30 @@ public class PersonApiController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);       
     }
 
+    @GetMapping("/getBmi/{id}")
+    public String getBmi(@PathVariable long id) {
+        Optional<Person> optional = repository.findById(id);
+        if (optional.isPresent()) {  // Good ID
+            Person person = optional.get();  // value from findByID
+            String bmiToString = person.getBmiToString();
+            return bmiToString;
+        }
+        // Bad ID
+        return "Error - Bad ID";       
+    }
+
+    @GetMapping("/getAge/{id}")
+    public String getAge(@PathVariable long id) {
+        Optional<Person> optional = repository.findById(id);
+        if (optional.isPresent()) {  // Good ID
+            Person person = optional.get();  // value from findByID
+            String ageToString = person.getAgeToString();
+            return ageToString;
+        }
+        // Bad ID
+        return "Error - Bad ID";       
+    }
+
     /*
     DELETE individual Person using ID
      */
@@ -66,8 +90,8 @@ public class PersonApiController {
                                              @RequestParam("password") String password,
                                              @RequestParam("name") String name,
                                              @RequestParam("dob") String dobString,
-                                             @RequestParam("height") Integer height,
-                                             @RequestParam("weight") Integer weight) {
+                                             @RequestParam("height") int height,
+                                             @RequestParam("weight") int weight) {
         Date dob;
         try {
             dob = new SimpleDateFormat("MM-dd-yyyy").parse(dobString);
@@ -101,11 +125,10 @@ public class PersonApiController {
     @PostMapping(value = "/setStats", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Person> personStats(@RequestBody final Map<String,Object> stat_map) {
         // find ID
-        long id=Long.parseLong((String)stat_map.get("id"));
+        long id=Long.parseLong((String)stat_map.get("id"));  
         Optional<Person> optional = repository.findById((id));
         if (optional.isPresent()) {  // Good ID
             Person person = optional.get();  // value from findByID
-            int step=(int)stat_map.get("steps");
 
             // Extract Attributes from JSON
             Map<String, Object> attributeMap = new HashMap<>();
@@ -114,11 +137,9 @@ public class PersonApiController {
                 if (!entry.getKey().equals("date") && !entry.getKey().equals("id"))
                     attributeMap.put(entry.getKey(), entry.getValue());
             }
-            attributeMap.put("goalStatus: ", step>person.getGoalStep());
 
             // Set Date and Attributes to SQL HashMap
-            Map<String, Map<String, Object>> date_map = new HashMap<>();
-            date_map.putAll(person.getStats());
+            Map<String, Map<String, Object>> date_map = person.getStats();
             date_map.put( (String) stat_map.get("date"), attributeMap );
             person.setStats(date_map);  // BUG, needs to be customized to replace if existing or append if new
             repository.save(person);  // conclude by writing the stats updates
@@ -130,20 +151,5 @@ public class PersonApiController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
         
     }
-
-    @PostMapping(value = "/setGoal", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Person> personGoal(@RequestBody final Map<String,Object> goal_map) {
-        long id=Long.parseLong((String)goal_map.get("id"));
-        Optional<Person> optional = repository.findById((id));
-        if (optional.isPresent()) {
-            Person person = optional.get();
-            person.setGoalStep((Integer)goal_map.get("goal"));
-            repository.save(person);
-            return new ResponseEntity<>(person, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
-        
-    }
-    
 
 }

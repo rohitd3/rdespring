@@ -1,5 +1,7 @@
 package com.nighthawk.spring_portfolio.mvc.person;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
@@ -14,7 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
@@ -64,15 +65,13 @@ public class Person {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dob;
+    
+    @Column(unique=false)
+    private int height;
 
-    @Positive
-    private Integer height;
+    @Column(unique=false)
+    private int weight;
 
-    @Positive
-    private Integer weight;
-
-    @Positive
-    private Integer goalStep;
     /* HashMap is used to store JSON for daily "stats"
     "stats": {
         "2022-11-13": {
@@ -87,14 +86,17 @@ public class Person {
     
 
     // Constructor used when building object from an API
-    public Person(String email, String password, String name, Date dob, Integer height, Integer weight) {
+    public Person(String email, String password, String name, Date dob, int height, int weight) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.dob = dob;
         this.height = height;
         this.weight = weight;
-        this.goalStep = (height/2 + weight)*70;
+    }
+
+    public String toString(){
+        return ("{ \"email\": " + this.email + ", " + "\"password\": " + this.password + ", " + "\"name\": " + this.name + ", " + "\"dob\": " + this.dob + " }" );
     }
 
     // A custom getter to return age from dob attribute
@@ -105,15 +107,27 @@ public class Person {
         return -1;
     }
 
-    public String toString() {
-        return ( "{ \"name\": "  +this.name+  ", " + "\"email\": "  +this.email+  ", " + "\"password\": "  +this.password+  ", " + "\"dateOfBirth\": "  +this.dob+  ", " + "\"age\": "  +this.getAge()+ ", " + "\"height(cm)\": "  +this.height+ ", " + "\"weight(kg)\": "  +this.weight+ ", " + "\"stepgoal\": "  +this.goalStep+ " }" );
+    public String getAgeToString(){
+        return ("{ \"name\": " + this.name + " ," + "\"age\": " + this.getAge() + " }" );
     }
 
-    public static void main(String[] args) {
-        Person p0 = new Person();
-        Person p1 = new Person("aidanywu@gmail.com", "password", "Aidan Wu", new java.util.GregorianCalendar(2006,4,6).getTime(), 200, 60);
-        System.out.println(p0);
-        System.out.println(p1);
+    public int getBmi(){
+        int bmi = (int) ( 703 * this.weight / Math.pow(this.height, 2) );
+        return bmi;
+    }
+
+    public String getBmiToString(){
+        return ("{ \"name\": " + this.name + " ," + "\"bmi\": " + this.getBmi() + " }" );
+    }
+
+    public static void main(String[] args) throws ParseException{
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date myDate = sdf.parse("2005-01-11");
+
+        Person allArgsPerson = new Person("rohitde@gmail.com", "123", "Rohit De", myDate, 67, 150 );
+        Person noArgsPerson = new Person();
+        System.out.println(noArgsPerson);
+        System.out.println(allArgsPerson);
     }
 
 }
