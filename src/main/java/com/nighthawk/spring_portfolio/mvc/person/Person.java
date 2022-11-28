@@ -100,12 +100,24 @@ public class Person {
         this.goalStep = (height/2 + weight)*70;
     }
 
+
     // A custom getter to return age from dob attribute
     public int getAge() {
         if (this.dob != null) {
             LocalDate birthDay = this.dob.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             return Period.between(birthDay, LocalDate.now()).getYears(); }
         return -1;
+    }
+
+    public String toString() {
+        return ( "{ \"name\": "  +this.name+  ", " + "\"email\": "  +this.email+  ", " + "\"password\": "  +this.password+  ", " + "\"dateOfBirth\": "  +this.dob+  ", " + "\"age\": "  +this.getAge()+ ", " + "\"height(cm)\": "  +this.height+ ", " + "\"weight(kg)\": "  +this.weight+ ", " + "\"stepgoal\": "  +this.goalStep+ " }" );
+    }
+
+    public static void main(String[] args) {
+        Person p0 = new Person();
+        Person p1 = new Person("derohit01@gmail.com", "password", "Rohit De", new java.util.GregorianCalendar(2005,5,6).getTime(), 200, 60);
+        System.out.println(p0);
+        System.out.println(p1);
     }
 
 }
