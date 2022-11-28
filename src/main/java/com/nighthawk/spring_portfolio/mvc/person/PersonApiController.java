@@ -42,8 +42,8 @@ public class PersonApiController {
         // Bad ID
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);       
     }
-    
-    /*
+
+/*
     DELETE individual Person using ID
      */
     @DeleteMapping("/delete/{id}")
@@ -65,7 +65,9 @@ public class PersonApiController {
     public ResponseEntity<Object> postPerson(@RequestParam("email") String email,
                                              @RequestParam("password") String password,
                                              @RequestParam("name") String name,
-                                             @RequestParam("dob") String dobString) {
+                                             @RequestParam("dob") String dobString,
+                                             @RequestParam("height") Integer height,
+                                             @RequestParam("weight") Integer weight) {
         Date dob;
         try {
             dob = new SimpleDateFormat("MM-dd-yyyy").parse(dobString);
@@ -73,7 +75,7 @@ public class PersonApiController {
             return new ResponseEntity<>(dobString +" error; try MM-dd-yyyy", HttpStatus.BAD_REQUEST);
         }
         // A person object WITHOUT ID will create a new record with default roles as student
-        Person person = new Person(email, password, name, dob);
+        Person person = new Person(email, password, name, dob, height, weight);
         repository.save(person);
         return new ResponseEntity<>(email +" is created successfully", HttpStatus.CREATED);
     }
@@ -92,6 +94,7 @@ public class PersonApiController {
         // return resulting list and status, error checking should be added
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
 
     /*
     The personStats API adds stats by Date to Person table 
