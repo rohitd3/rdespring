@@ -43,7 +43,7 @@ public class PersonApiController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);       
     }
 
-/*
+    /*
     DELETE individual Person using ID
      */
     @DeleteMapping("/delete/{id}")
@@ -95,8 +95,7 @@ public class PersonApiController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-
-   /*
+    /*
     The personStats API adds stats by Date to Person table 
     */
     @PostMapping(value = "/setStats", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -145,6 +144,4 @@ public class PersonApiController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
         
     }
-    
-
 }
