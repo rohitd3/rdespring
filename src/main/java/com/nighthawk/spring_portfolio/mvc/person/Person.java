@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
@@ -33,14 +34,11 @@ First set of annotations add functionality to POJO
 --- @Setter @Getter @ToString @NoArgsConstructor @RequiredArgsConstructor
 The last annotation connect to database
 --- @Entity
-*/
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@TypeDef(name="json", typeClass = JsonType.class)
-public class Person {
-
 @TypeDef(name="json", typeClass = JsonType.class)
 public class Person {
     
@@ -83,8 +81,7 @@ public class Person {
         }
     }
     */
-
-   @Type(type="json")
+    @Type(type="json")
     @Column(columnDefinition = "jsonb")
     private Map<String,Map<String, Object>> stats = new HashMap<>(); 
     
@@ -100,7 +97,6 @@ public class Person {
         this.goalStep = (height/2 + weight)*70;
     }
 
-
     // A custom getter to return age from dob attribute
     public int getAge() {
         if (this.dob != null) {
@@ -115,7 +111,7 @@ public class Person {
 
     public static void main(String[] args) {
         Person p0 = new Person();
-        Person p1 = new Person("derohit01@gmail.com", "password", "Rohit De", new java.util.GregorianCalendar(2005,5,6).getTime(), 200, 60);
+        Person p1 = new Person("derohit01@gmail.com", "password", "Rohit De", new java.util.GregorianCalendar(2005,7,6).getTime(), 200, 60);
         System.out.println(p0);
         System.out.println(p1);
     }
