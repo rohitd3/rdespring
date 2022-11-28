@@ -111,7 +111,7 @@ public class Person {
 
     public static void main(String[] args) {
         Person p0 = new Person();
-        Person p1 = new Person("derohit@gmail.com", "password", "Rohit De", new java.util.GregorianCalendar(2005,7,3).getTime(), 67, 157);
+        Person p1 = new Person("aidanywu@gmail.com", "password", "Aidan Wu", new java.util.GregorianCalendar(2006,4,6).getTime(), 200, 60);
         System.out.println(p0);
         System.out.println(p1);
     }
