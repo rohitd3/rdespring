@@ -33,11 +33,14 @@ First set of annotations add functionality to POJO
 --- @Setter @Getter @ToString @NoArgsConstructor @RequiredArgsConstructor
 The last annotation connect to database
 --- @Entity
- */
+*/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@TypeDef(name="json", typeClass = JsonType.class)
+public class Person {
+
 @TypeDef(name="json", typeClass = JsonType.class)
 public class Person {
     
@@ -63,8 +66,15 @@ public class Person {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dob;
-    
 
+    @Positive
+    private Integer height;
+
+    @Positive
+    private Integer weight;
+
+    @Positive
+    private Integer goalStep;
     /* HashMap is used to store JSON for daily "stats"
     "stats": {
         "2022-11-13": {
@@ -73,6 +83,7 @@ public class Person {
         }
     }
     */
+    
     @Type(type="json")
     @Column(columnDefinition = "jsonb")
     private Map<String,Map<String, Object>> stats = new HashMap<>(); 
