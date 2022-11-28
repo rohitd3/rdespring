@@ -83,18 +83,21 @@ public class Person {
         }
     }
     */
-    
-    @Type(type="json")
+
+   @Type(type="json")
     @Column(columnDefinition = "jsonb")
     private Map<String,Map<String, Object>> stats = new HashMap<>(); 
     
 
     // Constructor used when building object from an API
-    public Person(String email, String password, String name, Date dob) {
+    public Person(String email, String password, String name, Date dob, Integer height, Integer weight) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.dob = dob;
+        this.height = height;
+        this.weight = weight;
+        this.goalStep = (height/2 + weight)*70;
     }
 
     // A custom getter to return age from dob attribute
